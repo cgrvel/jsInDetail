@@ -169,7 +169,7 @@ function interviewQuestion (job) {
 //   parent();
 
 
-// Bind, call, apply
+// Bind, call, apply // https://www.taniarascia.com/this-bind-call-apply-javascript/
 
 // var raj = {
 //     name: 'raj',
