@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Asynchronous JavaScript</title>
+</head>
+<body>
+    <h1>Asynchronous JavaScript</h1>
+    <script>
+        /* const sec = () => {
+            setTimeout(()=>{
+                console.log('Async')
+            },2000)
+        }
+
+        const first = () => {
+            console.log('lol')
+            sec()
+            console.log('end')
+        }
+        first() */
+
+        /* function getRecipe() {
+            setTimeout(() => {
+                const receipeIds = [1,2,3]
+                console.log(receipeIds)
+                setTimeout((id) => {
+                    console.log(`${id} is a pasta by pavi`)
+                    setTimeout(id => {                                              // CALL BACK HELL -- promises to overcome this //ES6
+                        console.log(`${id} is a pasta by raj`)
+                    },1000, receipeIds[2])
+                },1000 ,receipeIds[1])
+            },1500)
+        }
+        getRecipe() */
+
+        /* //PROMISES
+
+        const getIds = new Promise((resolve, reject)=>{
+            setTimeout(() => {
+                resolve([21,12,20])
+            },1500)
+        })
+
+        const getRecipe = recId => {
+            return new Promise((res,rej) => {
+                setTimeout(id => {
+                const recipe = {title:'pasta', cook:'pavi'}
+                res(`${id} : ${recipe.title}`);
+                }, 1500, recId)
+            })
+        }
+
+        const getChef = chef => {
+            return new Promise((res,rej) => {
+                setTimeout(pub => {
+                const recipe = {title:'pasta', cook:'pavi'}
+                res(`${pub} : ${recipe.title}`)
+                },1500, chef)
+            })
+        }
+        // normal consume promises
+        /* getIds
+        .then(ids => {
+            console.log(ids)
+            return getRecipe(ids[2])
+        })
+        .then(recipe => {
+            console.log(recipe)
+            return getChef('pavi')
+        })
+        .then(pub => {
+            console.log(pub)
+        })
+        .catch(err => {
+            console.log(err)
+        }) 
+
+        //Async Await
+        async function getRecip() {
+            const Ids = await getIds
+            console.log(Ids)
+            const reci = await getRecipe(Ids[2])
+            console.log(reci)
+            const che = await getChef('raj')
+            console.log(che)
+            return che
+        }
+        getRecip().then(res => console.log(res)) */
+        function getWeather(id) {
+            fetch (`https://cors-anywhere.herokuapp.com/https://www.metaweather.com/api/location/${id}/`)
+        .then(res => {
+            console.log(res)
+            return res.json()
+        })
+        .then(data => {
+            //console.log(data)
+            const today = data.consolidated_weather[0]
+            console.log(today.weather_state_name)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+        }
+        getWeather(2487956)
+        getWeather(44418)
+
+        async function asyncGetWeather(id) {
+            try {
+            const res = await fetch (`https://cors-anywhere.herokuapp.com/https://www.metaweather.com/api/location/${id}/`)
+            const data = await res.json()
+            const today = data.consolidated_weather[1]
+            console.log(today.weather_state_name)    
+            return today.weather_state_name
+            }
+            catch (err) {
+                console.log(err)
+            }    
+            }
+        asyncGetWeather(2487956)
+       const data =  asyncGetWeather(44418).then(res => {
+           console.log(res)
+       })
+            
+    </script>
+</body>
+</html>
